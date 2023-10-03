@@ -1,5 +1,6 @@
 import 'package:bloc_tute/aap_view.dart';
 import 'package:bloc_tute/blocs/counter_bloc/counter_bloc.dart';
+import 'package:bloc_tute/blocs/multiple_bloc/multiple_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,8 +9,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CounterBloc>(
-      create: (context) => CounterBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CounterBloc>(
+          create: (context) => CounterBloc(),
+        ),
+        BlocProvider<MultipleBloc>(
+          create: (context) => MultipleBloc(),
+        ),
+      ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: AppView(),

@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:bloc_tute/blocs/counter_bloc/counter_bloc.dart';
+import 'package:bloc_tute/blocs/multiple_bloc/multiple_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,13 +16,10 @@ class AppView extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocSelector<CounterBloc, CounterState, String>(
-            selector: (state) {
-              return "I'm manupulating value from the selector\nManupulated value ${state.counter + Random().nextInt(100)}\nReal value is ${state.counter}";
-            },
+          BlocBuilder<CounterBloc, CounterState>(
             builder: (context, state) {
               return Text(
-                state,
+                "${state.counter}",
                 style: const TextStyle(
                   fontSize: 20,
                 ),
@@ -39,6 +35,8 @@ class AppView extends StatelessWidget {
                 FloatingActionButton(
                   onPressed: () {
                     context.read<CounterBloc>().add(CounterIncrementEvent());
+                    BlocProvider.of<MultipleBloc>(context)
+                        .add(MultiplyByTwoEvent());
                   },
                   child: const Icon(Icons.add),
                 ),
@@ -49,12 +47,18 @@ class AppView extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<CounterBloc>(context)
                         .add(CounterDecrementEvent());
+                    context.read<MultipleBloc>().add(MultiplyByThreeEvent());
                   },
                   child: const Icon(Icons.remove),
                 ),
               ],
             ),
           ),
+          BlocBuilder<MultipleBloc, MultipleState>(
+            builder: (context, state) {
+              return Text("Multiple ${state.value}");
+            },
+          )
         ],
       ),
     );
