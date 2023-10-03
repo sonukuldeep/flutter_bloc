@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc_tute/blocs/counter_bloc/counter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,16 +17,17 @@ class AppView extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocConsumer<CounterBloc, CounterState>(
-            listener: (context, state) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Counter value is ${state.counter}"),
-              ));
+          BlocSelector<CounterBloc, CounterState, String>(
+            selector: (state) {
+              return "I'm manupulating value from the selector\nManupulated value ${state.counter + Random().nextInt(100)}\nReal value is ${state.counter}";
             },
             builder: (context, state) {
               return Text(
-                "Counter value is ${state.counter}",
-                style: const TextStyle(fontSize: 20),
+                state,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
               );
             },
           ),
