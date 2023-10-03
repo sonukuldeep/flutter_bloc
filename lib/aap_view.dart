@@ -15,19 +15,18 @@ class AppView extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocListener<CounterBloc, CounterState>(
+          BlocConsumer<CounterBloc, CounterState>(
             listener: (context, state) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Counter current value ${state.counter}"),
-                  backgroundColor: Colors.blue,
-                ),
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Counter value is ${state.counter}"),
+              ));
+            },
+            builder: (context, state) {
+              return Text(
+                "Counter value is ${state.counter}",
+                style: const TextStyle(fontSize: 20),
               );
             },
-            child: const Text(
-              "Click any buttons",
-              style: TextStyle(fontSize: 20),
-            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
