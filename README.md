@@ -8,6 +8,7 @@ Flutter BLoC (Business Logic Component) is a state management pattern and librar
 - BlocConsumer - code example for BlocConsumer
 - BlocSelector - code example for BlocSelector
 - MultiblocProvider - code example for MultiblocProvider
+- Block example - connectivity app
 
 ## Acknowledgements
  - Flutter community
