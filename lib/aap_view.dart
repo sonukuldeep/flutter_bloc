@@ -1,4 +1,5 @@
 import 'package:bloc_tute/blocs/counter_bloc/counter_bloc.dart';
+import 'package:bloc_tute/blocs/internet_bloc/internet_bloc.dart';
 import 'package:bloc_tute/blocs/multiple_bloc/multiple_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,7 +59,34 @@ class AppView extends StatelessWidget {
             builder: (context, state) {
               return Text("Multiple ${state.value}");
             },
-          )
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          BlocListener<InternetBloc, InternetState>(
+            listener: (context, state) {
+              if (state is InternetGainedState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Internet gained")));
+              } else if (state is InternetLostState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Internet lost")));
+              } else {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(const SnackBar(content: Text("Loading")));
+              }
+            },
+            child: Container(),
+          ),
+          BlocBuilder<InternetBloc, InternetState>(builder: (context, state) {
+            if (state is InternetGainedState) {
+              return const Text("Connected to internet");
+            } else if (state is InternetLostState) {
+              return const Text("Not Connected to internet");
+            } else {
+              return const Text("Loading..");
+            }
+          })
         ],
       ),
     );
