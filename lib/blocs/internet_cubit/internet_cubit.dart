@@ -3,24 +3,20 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:connectivity/connectivity.dart';
 
-part 'internet_event.dart';
 part 'internet_state.dart';
 
-class InternetBloc extends Bloc<InternetEvent, InternetState> {
+class InternetCubit extends Cubit<InternetState> {
   final _connectivity = Connectivity();
   StreamSubscription? connectivitySubscription;
 
-  InternetBloc() : super(InternetInitialState()) {
-    on<InternetGainedEvent>((event, emit) => emit(InternetGainedState()));
-    on<InternetLostEvent>((event, emit) => emit(InternetLostState()));
-
+  InternetCubit() : super(InternetState.Initial) {
     connectivitySubscription =
         _connectivity.onConnectivityChanged.listen((event) {
-      if (event == ConnectivityResult.mobile ||
-          event == ConnectivityResult.wifi) {
-        add(InternetGainedEvent());
+      if (event == ConnectivityResult.wifi ||
+          event == ConnectivityResult.mobile) {
+        emit(InternetState.Gained);
       } else {
-        add(InternetLostEvent());
+        emit(InternetState.Lost);
       }
     });
   }

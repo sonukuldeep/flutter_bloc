@@ -1,6 +1,6 @@
 import 'package:bloc_tute/aap_view.dart';
 import 'package:bloc_tute/blocs/counter_bloc/counter_bloc.dart';
-import 'package:bloc_tute/blocs/internet_bloc/internet_bloc.dart';
+import 'package:bloc_tute/blocs/internet_cubit/internet_cubit.dart';
 import 'package:bloc_tute/blocs/multiple_bloc/multiple_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +18,8 @@ class App extends StatelessWidget {
         BlocProvider<MultipleBloc>(
           create: (context) => MultipleBloc(),
         ),
-        BlocProvider<InternetBloc>(
-          create: (context) => InternetBloc(),
+        BlocProvider<InternetCubit>(
+          create: (context) => InternetCubit(),
         ),
       ],
       child: const MaterialApp(
